@@ -120,7 +120,7 @@ class DropCoin:
 
 async def main(referral_username, file_name):
     global g_fail, g_success
-    with open(file_name, 'r') as f, open('dropcoin_success.txt', 'a') as s, open('dropcoin_error.txt', 'a') as e:  # eth----auth_token
+    with open(file_name, 'r', encoding='UTF-8') as f, open('dropcoin_success.txt', 'a') as s, open('dropcoin_error.txt', 'a') as e:  # eth----auth_token
         lines = f.readlines()
         for line in lines:
             wallet, auth_token = line.strip().split('----')
