@@ -12,8 +12,8 @@ logger = logger.patch(lambda record: record["extra"].update(fail=g_fail, success
 
 class DropCoin:
     def __init__(self, auth_token, wallet, referral):
-        self.http = httpx.AsyncClient()
-        self.Twitter = httpx.AsyncClient()
+        self.http = httpx.AsyncClient(verify=False)
+        self.Twitter = httpx.AsyncClient(verify=False)
         self.Twitter.headers = {
             'Accept-Language': 'en-US,en;q=0.8',
             'Authority': 'twitter.com',
@@ -54,7 +54,6 @@ class DropCoin:
             response = await self.Twitter.get(f'https://api.twitter.com/oauth/authorize?oauth_token={self.oauth_token}')
             if 'authenticity_token' in response.text:
                 self.authenticity_token = response.text.split('authenticity_token" value="')[1].split('"')[0]
-                print(self.authenticity_token)
                 return True
             logger.error(f'{self.wallet} 获取authenticity_token失败')
             return False
